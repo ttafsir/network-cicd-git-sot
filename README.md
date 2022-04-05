@@ -1,4 +1,4 @@
-<img src="https://user-images.githubusercontent.com/7189920/161458322-195a9e3e-c753-4f7e-a23c-43386b22b417.png" alt="image" style="zoom:15%;" />
+<img src="https://user-images.githubusercontent.com/7189920/161707065-4bd60ae3-47f0-4426-92fe-1e07dd983897.png" alt="wiley" />
 
 # ACME-CORP: Data center network automation
 
