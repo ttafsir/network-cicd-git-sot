@@ -1,0 +1,8 @@
+---
+plugin: avd_fabric
+data_dir: ../data
+
+design: evpn
+device_patterns:
+  leaf: (leaf)([0-9]{2}(?:_.*|-.*))
+  spine: (spine)([0-9]{2}(?:_.*|-.*))

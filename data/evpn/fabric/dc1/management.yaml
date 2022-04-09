@@ -1,0 +1,7 @@
+---
+mgmt_network: 172.100.100.4/24
+mgmt_gateway: 172.100.100.1
+
+# Management eAPI configuration
+management_eapi:
+  enable_https: true
