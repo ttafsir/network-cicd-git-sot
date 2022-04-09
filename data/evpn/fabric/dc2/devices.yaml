@@ -1,0 +1,16 @@
+---
+spine:
+- {name: spine01-dc2, ip: 10.1.2.1/24, platform: eos}
+- {name: spine02-dc2, ip: 10.1.2.2/24, platform: eos}
+- {name: spine01_d-dc2, ip: 10.1.4.1/24, env: dev, platform: eos}
+- {name: spine02_d-dc2, ip: 10.1.4.2/24, env: dev, platform: eos}
+
+l3leaf:
+- {name: leaf01-dc2, ip: 10.1.2.3/24, platform: eos}
+- {name: leaf02-dc2, ip: 10.1.2.4/24, platform: eos}
+- {name: leaf03-dc2, ip: 10.1.2.5/24, platform: eos}
+- {name: leaf04-dc2, ip: 10.1.2.6/24, platform: eos}
+- {name: leaf01_d-dc2, ip: 10.1.4.3/24, env: dev, platform: eos}
+- {name: leaf02_d-dc2, ip: 10.1.4.4/24, env: dev, platform: eos}
+- {name: leaf03_d-dc2, ip: 10.1.4.5/24, env: dev, platform: eos}
+- {name: leaf04_d-dc2, ip: 10.1.4.6/24, env: dev, platform: eos}

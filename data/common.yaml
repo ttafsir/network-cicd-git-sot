@@ -1,18 +1,34 @@
 ---
-users:
+local_users:
+  test_admin:
+    privilege: 15
+    role: network-admin
+    sha512_password: "$6$7GTxsrRjnwheeKfR$zhJ8qycVjAJz41rf5JRSfWIzp93IL5WL7sMS/Taz1yfShz.MAnoajCf7R2n1/EZW7PN5QA3Huayl0lVQesBYN1"
 
-snmp:
+name_servers:
+  - 1.1.1.1
+  - 8.8.8.8
 
 ntp:
+  servers:
+  - name: time.google.com
+    preferred: true
+    vrf: MGMT
+    iburst: true
 
-dns:
 
-syslog:
+banners:
+  motd: |
+    _____ ___         ___          ___   _____ ___   ___
+    (  _  )  _ \/ \_/ \  _ \       (  _ \(  _  )  _ \(  _ \
+    | (_) | ( (_)     | (_(_)______| ( (_) ( ) | (_) ) |_) )  This is a private system.
+    (  _  ) |  _| (_) |  _)_(______) |  _| | | |    /|  __/   Unauthorized use is prohibited.
+    | | | | (_( ) | | | (_( )      | (_( ) (_) | |\ \| |      Please disconnect immediately.
+    (_) (_)____/(_) (_)____/       (____/(_____)_) (_)_)
 
-motd: |
-  _____ ___         ___          ___   _____ ___   ___
-  (  _  )  _ \/ \_/ \  _ \       (  _ \(  _  )  _ \(  _ \
-  | (_) | ( (_)     | (_(_)______| ( (_) ( ) | (_) ) |_) )  This is a private system.
-  (  _  ) |  _| (_) |  _)_(______) |  _| | | |    /|  __/   Unauthorized use is prohibited.
-  | | | | (_( ) | | | (_( )      | (_( ) (_) | |\ \| |      Please disconnect immediately.
-  (_) (_)____/(_) (_)____/       (____/(_____)_) (_)_)
+
+service_routing_protocols_model: multi-agent
+
+spanning_tree_mode: mstp
+
+ip_routing: true

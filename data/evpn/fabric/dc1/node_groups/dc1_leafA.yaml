@@ -1,0 +1,5 @@
+---
+bgp_as: 65101
+filter:
+  tenants: [ Tenant_A ]
+  tags: [ opzone_pod1 ]

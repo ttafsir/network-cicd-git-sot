@@ -1,0 +1,4 @@
+---
+id: 1
+mgmt_ip: 172.100.100.4/24
+uplink_switch_interfaces: [Ethernet1, Ethernet1]
