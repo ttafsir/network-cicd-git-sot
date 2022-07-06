@@ -15,3 +15,16 @@ This list will evolve as we add more automation to the stack.
 * Ansible
 * Python
 * Arista-AVD
+
+
+## Inventory
+
+```sh
+ansible-inventory  -i inventory/ --playbook-dir ./ --host leaf01-dc1
+```
+
+## Building configurations
+
+```sh
+ansible-playbook generate-configs.yaml -i inventory/ -e host_group="dc1:&env_dev"
+```

@@ -9,9 +9,9 @@ DOCUMENTATION = r"""
     description: Returns Ansible inventory from AVD fabric design
     options:
       plugin:
-          description: Name of the plugin
-          required: true
-          choices: ['avd_fabric']
+        description: Name of the plugin
+        required: true
+        choices: ['avd_fabric']
       data_dir:
         description: Path to the directory containing the AVD fabric design
         required: true
