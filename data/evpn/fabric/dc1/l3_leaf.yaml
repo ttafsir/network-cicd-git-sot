@@ -18,32 +18,32 @@ l3leaf:
     bgp_defaults:
       - no bgp default ipv4-unicast
       - distance bgp 20 200 200
-  # node_groups:
-  #   dc1_leaf1:
-  #     bgp_as: 65101
-  #     filter:
-  #       tenants: [ Tenant_A ]
-  #       tags: [ opzone_pod1 ]
-  #     nodes:
-  #       leaf01-dc1:
-  #         id: 1
-  #         mgmt_ip: 172.100.100.4/24
-  #         uplink_switch_interfaces: [Ethernet1, Ethernet1]
-  #       leaf02-dc1:
-  #         id: 2
-  #         mgmt_ip: 172.100.100.5/24
-  #         uplink_switch_interfaces: [Ethernet2, Ethernet2]
-  #   dc1_svc01:
-  #     bgp_as: 65102
-  #     filter:
-  #       tenants: [ Tenant_A ]
-  #       tags: [ opzone_pod2 ]
-  #     nodes:
-  #       leaf03-dc1:
-  #         id: 3
-  #         mgmt_ip: 172.100.100.6/24
-  #         uplink_switch_interfaces: [Ethernet3, Ethernet3]
-  #       leaf04-dc1:
-  #         id: 4
-  #         mgmt_ip: 172.100.100.7/24
-  #         uplink_switch_interfaces: [Ethernet4, Ethernet4]
+  node_groups:
+    dc1_leaf1:
+      bgp_as: 65101
+      filter:
+        tenants: [Tenant_A]
+        tags: [opzone_pod1]
+      nodes:
+        leaf01-dc1:
+          id: 1
+          mgmt_ip: 172.100.100.4/24
+          uplink_switch_interfaces: [Ethernet1, Ethernet1]
+        leaf02-dc1:
+          id: 2
+          mgmt_ip: 172.100.100.5/24
+          uplink_switch_interfaces: [Ethernet2, Ethernet2]
+    dc1_svc01:
+      bgp_as: 65102
+      filter:
+        tenants: [Tenant_A]
+        tags: [opzone_pod2]
+      nodes:
+        leaf03-dc1:
+          id: 3
+          mgmt_ip: 172.100.100.6/24
+          uplink_switch_interfaces: [Ethernet3, Ethernet3]
+        leaf04-dc1:
+          id: 4
+          mgmt_ip: 172.100.100.7/24
+          uplink_switch_interfaces: [Ethernet4, Ethernet4]

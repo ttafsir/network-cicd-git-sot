@@ -1,22 +1,22 @@
 ---
 plugin: constructed
-strict: False   # skip instead of producing an error if missing facts.
+strict: False # skip instead of producing an error if missing facts.
 compose:
-  ansible_user: ansible_user | default("admin")
+  ansible_user: ansible_user | default("test_admin")
   ansible_network_os: platform
   ansible_become: ansible_become | default(true)
   ansible_become_method: ansible_become_method | default('enable')
-  ansible_connection: " 'httpapi' if platform == 'eos' else 'network_cli' "
+  ansible_connection: "network_cli"
   ansible_httpapi_port: 443
   ansible_httpapi_use_ssl: true
   ansible_httpapi_validate_certs: false
 keyed_groups:
   # this creates a group per platform (eos, ios, etc) and assigns the hosts that have matching values to it
   - key: platform
-    prefix: 'network_os'
+    prefix: "network_os"
   # this creates a group per environment (dev, production, etc) and assigns the hosts with matching values
   - key: env
-    prefix: 'env'
+    prefix: "env"
   # this creates a group per device type (spine, leaf, etc) and assigns the hosts with matching values
   - key: type
     prefix: ""

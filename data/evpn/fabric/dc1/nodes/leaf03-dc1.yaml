@@ -1,4 +1,3 @@
 ---
-id: 3
-mgmt_ip: 172.100.100.6/24
-uplink_switch_interfaces: [Ethernet3, Ethernet3]
+env: dev
+platform: eos

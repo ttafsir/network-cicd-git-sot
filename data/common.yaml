@@ -1,4 +1,6 @@
 ---
+ios_version: 4.27.0F
+
 local_users:
   test_admin:
     privilege: 15
@@ -11,11 +13,10 @@ name_servers:
 
 ntp:
   servers:
-  - name: time.google.com
-    preferred: true
-    vrf: MGMT
-    iburst: true
-
+    - name: time.google.com
+      preferred: true
+      vrf: MGMT
+      iburst: true
 
 banners:
   motd: |
@@ -25,7 +26,6 @@ banners:
     (  _  ) |  _| (_) |  _)_(______) |  _| | | |    /|  __/   Unauthorized use is prohibited.
     | | | | (_( ) | | | (_( )      | (_( ) (_) | |\ \| |      Please disconnect immediately.
     (_) (_)____/(_) (_)____/       (____/(_____)_) (_)_)
-
 
 service_routing_protocols_model: multi-agent
 
