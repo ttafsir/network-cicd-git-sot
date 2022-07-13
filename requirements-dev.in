@@ -1,0 +1,8 @@
+-r requirements.txt
+pytest
+pytest-testinfra[ansible]
+pytest-xdist
+pytest-html
+paramiko
+ntc_templates
+dpath
