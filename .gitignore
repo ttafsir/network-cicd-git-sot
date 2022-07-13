@@ -162,3 +162,6 @@ output/
 collections/
 ansible/inventory/production/documentation
 ansible/inventory/production/intended
+ansible/inventory/host_vars
+report.html
+output.xml

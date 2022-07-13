@@ -9,9 +9,9 @@ spine:
       - distance bgp 20 200 200
   leaf_as_range: 65101-65132
   nodes:
-    DC1_SPINE1:
+    spine01-dc1:
       id: 1
       mgmt_ip: 172.100.100.2/24
-    DC1_SPINE2:
+    spine02-dc1:
       id: 2
       mgmt_ip: 172.100.100.3/24

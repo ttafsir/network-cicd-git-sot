@@ -39,6 +39,22 @@ router_bgp:
     10.255.251.0:
       peer_group: MLAG-IPv4-UNDERLAY-PEER
       description: leaf01-dc1
+    172.31.255.4:
+      peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: '65001'
+      description: spine01-dc1_Ethernet2
+    172.31.255.6:
+      peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: '65001'
+      description: spine02-dc1_Ethernet2
+    192.168.255.1:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: spine01-dc1
+      remote_as: '65001'
+    192.168.255.2:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: spine02-dc1
+      remote_as: '65001'
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP
@@ -206,6 +222,24 @@ ethernet_interfaces:
     channel_group:
       id: 3
       mode: active
+  Ethernet1:
+    peer: spine01-dc1
+    peer_interface: Ethernet2
+    peer_type: spine
+    description: P2P_LINK_TO_SPINE01-DC1_Ethernet2
+    mtu: 9000
+    type: routed
+    shutdown: false
+    ip_address: 172.31.255.5/31
+  Ethernet2:
+    peer: spine02-dc1
+    peer_interface: Ethernet2
+    peer_type: spine
+    description: P2P_LINK_TO_SPINE02-DC1_Ethernet2
+    mtu: 9000
+    type: routed
+    shutdown: false
+    ip_address: 172.31.255.7/31
 mlag_configuration:
   domain_id: dc1_leaf1
   local_interface: Vlan4094

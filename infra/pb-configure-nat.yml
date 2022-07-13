@@ -1,0 +1,82 @@
+---
+- name: CONFIGURE PORT FORWARDING FOR EVE-NG HOSTS
+  hosts: eve_ng_host
+  gather_facts: false
+
+  vars:
+    nodes: "{{  lookup('file', 'nodes.yml') | from_yaml }}"
+    destination: "{{ lookup('env', 'EVE_NG_HOST') }}"
+    structured_data_dir: ../ansible/inventory/intended/structured_configs
+
+  tasks:
+    - name: enable IP forwarding
+      ansible.builtin.command: sysctl net.ipv4.ip_forward=1
+
+    - name: build node port forwarding map
+      set_fact:
+        node_port_forwarding_map:
+          "{{ node_port_forwarding_map|default({}) | combine(
+          {
+          item.name: {
+          'ip': item.url | urlsplit('hostname'),
+          'port': '22' ~ (item.url | urlsplit('port') | string)[2:],
+          'dest_ip': (node_data.management_interfaces['Management1'].ip_address).split('/')[0]
+          }
+          }) }}"
+      loop: "{{ nodes }}"
+      vars:
+        node_data: "{{ lookup('file', structured_data_dir ~ '/' ~ item.name ~ '.yml') | from_yaml }}"
+      tags: ["update_inventory"]
+      delegate_to: localhost
+
+    - name: Iptables flush nat
+      ansible.builtin.iptables:
+        table: nat
+        chain: "{{ item }}"
+        flush: yes
+      with_items: ["INPUT", "OUTPUT", "PREROUTING", "POSTROUTING"]
+
+    - name: Setup port forwarding for SSH to nodes
+      ansible.builtin.command: >
+        iptables -t nat -A PREROUTING -p tcp --dport {{ data.port }} -j DNAT --to-destination {{ data.dest_ip }}:22
+      loop: "{{ node_port_forwarding_map | dict2items }}"
+      vars:
+        node: "{{ item.key }}"
+        data: "{{ item.value }}"
+      register: port_forward_task
+
+    - name: Setup port forwarding for HTTPAPI to nodes
+      ansible.builtin.command: >
+        iptables -t nat -A PREROUTING -p tcp --dport {{ data.http_port }} -j DNAT --to-destination {{ data.dest_ip }}:443
+      loop: "{{ node_port_forwarding_map | dict2items }}"
+      vars:
+        node: "{{ item.key }}"
+        data: "{{ item.value }}"
+      register: port_forward_task
+      ignore_errors: true
+
+    - name: update ansible inventory
+      block:
+        - name: create host_vars directory for each device in ../ansible/inventory
+          file:
+            path: "../ansible/inventory/host_vars"
+            state: directory
+          loop:
+            - ../ansible/inventory
+            - ../ansible/inventory/host_vars
+
+        - name: update ansible inventory for each node in node_port_forwarding_map
+          copy:
+            dest: "../ansible/inventory/host_vars/{{ node }}.yml"
+            content: |
+              ---
+              # This file is generated - MANUAL EDITS MAY BE LOST
+              ansible_host: "{{ data.ip }}"
+              ansible_port: "{{ data.http_port if data.http_port is defined else data.port }}"
+          loop: "{{ node_port_forwarding_map | dict2items }}"
+          vars:
+            node: "{{ item.key }}"
+            data: "{{ item.value }}"
+      # when: port_forward_task is succeeded
+      tags: ["update_inventory"]
+      delegate_to: localhost

@@ -13,7 +13,7 @@ nodes:
     top: 135
     ethernet: 8
     configuration:
-      file: ansible/inventory/intended/configs/leaf01-dc1.cfg
+      file: ../ansible/inventory/intended/configs/leaf01-dc1.cfg
   - name: leaf02-dc1
     template: veos
     image: veos-4.27.0F
@@ -22,7 +22,7 @@ nodes:
     top: 135
     ethernet: 8
     configuration:
-      file: ansible/inventory/intended/configs/leaf02-dc1.cfg
+      file: ../ansible/inventory/intended/configs/leaf02-dc1.cfg
   - name: leaf03-dc1
     template: veos
     image: veos-4.27.0F
@@ -31,7 +31,7 @@ nodes:
     top: 135
     ethernet: 8
     configuration:
-      file: ansible/inventory/intended/configs/leaf03-dc1.cfg
+      file: ../ansible/inventory/intended/configs/leaf03-dc1.cfg
   - name: leaf04-dc1
     template: veos
     image: veos-4.27.0F
@@ -40,21 +40,43 @@ nodes:
     top: 135
     ethernet: 8
     configuration:
-      file: ansible/inventory/intended/configs/leaf04-dc1.cfg
-  - name: spine01
+      file: ../ansible/inventory/intended/configs/leaf04-dc1.cfg
+  - name: leaf05-dc1
+    template: veos
+    image: veos-4.27.0F
+    node_type: qemu
+    left: 500
+    top: 135
+    ethernet: 8
+    configuration:
+      file: ../ansible/inventory/intended/configs/leaf05-dc1.cfg
+  - name: leaf06-dc1
+    template: veos
+    image: veos-4.27.0F
+    node_type: qemu
+    left: 500
+    top: 135
+    ethernet: 8
+    configuration:
+      file: ../ansible/inventory/intended/configs/leaf06-dc1.cfg
+  - name: spine01-dc1
     template: veos
     image: veos-4.27.0F
     node_type: qemu
     left: 150
     top: 474
     ethernet: 8
-  - name: spine02
+    configuration:
+      file: ../ansible/inventory/intended/configs/spine01-dc1.cfg
+  - name: spine02-dc1
     template: veos
     image: veos-4.27.0F
     node_type: qemu
     left: 350
     top: 474
     ethernet: 8
+    configuration:
+      file: ../ansible/inventory/intended/configs/spine02-dc1.cfg
 networks:
   - name: eve-mgmt
     network_type: pnet1
@@ -67,8 +89,10 @@ links:
     - { "src": "leaf02-dc1", "src_label": "Mgmt1", "dst": "eve-mgmt" }
     - { "src": "leaf03-dc1", "src_label": "Mgmt1", "dst": "eve-mgmt" }
     - { "src": "leaf04-dc1", "src_label": "Mgmt1", "dst": "eve-mgmt" }
-    - { "src": "spine01", "src_label": "Mgmt1", "dst": "eve-mgmt" }
-    - { "src": "spine02", "src_label": "Mgmt1", "dst": "eve-mgmt" }
+    - { "src": "leaf05-dc1", "src_label": "Mgmt1", "dst": "eve-mgmt" }
+    - { "src": "leaf06-dc1", "src_label": "Mgmt1", "dst": "eve-mgmt" }
+    - { "src": "spine01-dc1", "src_label": "Mgmt1", "dst": "eve-mgmt" }
+    - { "src": "spine02-dc1", "src_label": "Mgmt1", "dst": "eve-mgmt" }
 
   node:
     # leaf01 to leaf02
@@ -88,26 +112,26 @@ links:
     - {
         "src": "leaf01-dc1",
         "src_label": "Eth1",
-        "dst": "spine01",
+        "dst": "spine01-dc1",
         "dst_label": "Eth1",
       }
     - {
         "src": "leaf01-dc1",
         "src_label": "Eth2",
-        "dst": "spine02",
+        "dst": "spine02-dc1",
         "dst_label": "Eth1",
       }
     # # leaf02 to spines
     - {
         "src": "leaf02-dc1",
         "src_label": "Eth1",
-        "dst": "spine01",
+        "dst": "spine01-dc1",
         "dst_label": "Eth2",
       }
     - {
         "src": "leaf02-dc1",
         "src_label": "Eth2",
-        "dst": "spine02",
+        "dst": "spine02-dc1",
         "dst_label": "Eth2",
       }
     # leaf03 to leaf04
@@ -127,25 +151,66 @@ links:
     - {
         "src": "leaf03-dc1",
         "src_label": "Eth1",
-        "dst": "spine01",
+        "dst": "spine01-dc1",
         "dst_label": "Eth3",
       }
     - {
         "src": "leaf03-dc1",
         "src_label": "Eth2",
-        "dst": "spine02",
+        "dst": "spine02-dc1",
         "dst_label": "Eth3",
       }
     # leaf04 to spines
     - {
         "src": "leaf04-dc1",
         "src_label": "Eth1",
-        "dst": "spine01",
+        "dst": "spine01-dc1",
         "dst_label": "Eth4",
       }
     - {
         "src": "leaf04-dc1",
         "src_label": "Eth2",
-        "dst": "spine02",
+        "dst": "spine02-dc1",
         "dst_label": "Eth4",
+      }
+    # leaf05 to leaf06
+    - {
+        "src": "leaf05-dc1",
+        "src_label": "Eth3",
+        "dst": "leaf06-dc1",
+        "dst_label": "Eth3",
+      }
+    - {
+        "src": "leaf05-dc1",
+        "src_label": "Eth4",
+        "dst": "leaf06-dc1",
+        "dst_label": "Eth4",
+      }
+    # leaf05 to leaf03
+    - {
+        "src": "leaf05-dc1",
+        "src_label": "Eth1",
+        "dst": "leaf03-dc1",
+        "dst_label": "Eth5",
+      }
+    # leaf05 to leaf04
+    - {
+        "src": "leaf05-dc1",
+        "src_label": "Eth2",
+        "dst": "leaf04-dc1",
+        "dst_label": "Eth5",
+      }
+    # leaf06 to leaf03
+    - {
+        "src": "leaf06-dc1",
+        "src_label": "Eth1",
+        "dst": "leaf03-dc1",
+        "dst_label": "Eth6",
+      }
+    # leaf06 to leaf04
+    - {
+        "src": "leaf06-dc1",
+        "src_label": "Eth2",
+        "dst": "leaf04-dc1",
+        "dst_label": "Eth6",
       }
