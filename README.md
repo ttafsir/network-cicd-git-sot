@@ -17,14 +17,28 @@ This list will evolve as we add more automation to the stack.
 * Arista-AVD
 
 
-## Inventory
+## Testing the Infrastructure
 
-```sh
-ansible-inventory  -i inventory/ --playbook-dir ./ --host leaf01-dc1
-```
-
-## Building configurations
+### Create device configurations
 
 ```sh
 ansible-playbook generate-configs.yaml -i inventory/ -e host_group="dc1:&env_dev"
+```
+
+### Build EVE-NG infrastructure
+
+```sh
+make build-eve-ng
+```
+
+### Create inventory for testing
+
+```sh
+make test-inventory
+```
+
+### Tear down the infrastructure
+
+```sh
+make destroy-eve-ng
 ```
