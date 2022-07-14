@@ -17,21 +17,86 @@ This list will evolve as we add more automation to the stack.
 * Arista-AVD
 
 
-## Testing the Infrastructure
+## Contributing
+
+1. Clone the repo
+
+```sh
+git clone https://github.com/ttafsir/
+```
+
+### Install Requirements
+
+1. Install Python Requirements
+
+```sh
+python -m venv .venv
+source .venv/bin/activate
+```
+
+```sh
+pip install -r requirements.txt
+```
+
+2. Install Ansible Galaxy Requirements
+
+```sh
+ansible-galaxy collection install -r roles/requirements.yml -p collections
+```
+
 
 ### Create device configurations
+
+The Arista AVD collection allows us to create device configurations based on intent data we've defined in the `data` directory.
+
+To create the device configurations, we can use the `generate-configs.yaml` playbook or the `make configs` command.
 
 ```sh
 ansible-playbook generate-configs.yaml -i inventory/ -e host_group="dc1:&env_dev"
 ```
 
+Alternatively, we can use the `make configs` command. It will create the device configurations for the "dc1" host group in the "dev" environment.
+
+```sh
+make configs
+```
+
+You can type `make` to view the other available commands.
+
+```sh
+➜ make
+build-eve-ng                   Build eve-ng lab from topology file
+configs                        AVD configs
+destroy-eve-ng                 Destroy eve-ng lab
+test-inventory                 Create inventory file for test
+```
+
 ### Build EVE-NG infrastructure
+
+To test our generated configs, we can deploy them to a virtual infrastructure and test the network to assert that our deployment is working as intended. We use a [topology file](infra/eve-ng-fabric-topology.yml) to define the infrastructure. Each device in the topology has a configuration directive that points to generated config files. We use the [evengsdk](www.github/ttafsir/evengsdk) library to manage the virtual infrastructure.
+
+To build the infrastructure, we can use the `build-eve-ng` command. Before running the command, we need to configuration environment variables for the evengsdk library.
+
+Create a file called `.env` in the `infra` directory of the repo.
+
+```txt
+# infra/.env
+export EVE_NG_HOST=<hostname or IP>
+export EVE_NG_USERNAME=admin                    # EVE-NG API/GUI username
+export EVE_NG_PASSWORD=<eve-ng API/GUI pass>    # EVE-NG API/GUI password
+export EVE_NG_SSH_USERNAME=<eve-ng ssh user>    # EVE-NG SSH username
+export EVE_NG_SSH_PASSWORD=<password>           # EVE-NG SSH password
+```
+
+Once the environment variables are set, we can run the `build-eve-ng` command.
 
 ```sh
 make build-eve-ng
 ```
 
 ### Create inventory for testing
+
+We use inventory plugins for our configure and manage our infrastructure. However, the ansible backend service for the [testinfra] pytest library does not seem to support inventory plugins. For that reason, we need to create an inventory file for testing.
 
 ```sh
 make test-inventory
