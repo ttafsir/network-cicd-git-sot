@@ -107,3 +107,33 @@ make test-inventory
 ```sh
 make destroy-eve-ng
 ```
+
+## Testing
+
+To test our infrastructure, we can use the pytest with the [testinfra] pytest library. `testinfra` provides a testing framework that allows use of different backends for testing, including Ansible. For our testing, we use the ansible backend to leverage the existing Ansible inventory and to also use ansible for the Arrange, and Act steps for our tests.
+
+### Tox
+
+To run the tests, we can use the [tox] library. You can use the `tox` command to run the tests.
+
+```sh
+tox
+```
+
+Our tox configuration file is located in the `tox.ini` file, and it allows us to run the tests in different environments and to pass arguments to Pytest, as needed.
+
+For example, we can run just the BGP tests by filtering the tests using the `-k` option.
+
+```sh
+tox -- -k bgp
+```
+
+the `--` is a special option that tells tox that the following arguments are for Pytest.
+
+Here's another example that shows how we can increase the number of workers for the tests.
+
+```sh
+tox -- -k bgp -n 10
+```
+
+In this case, the `-n` option tells tox to run the tests in parallel. The `10` argument is the number of workers. This option is provided by the `pytest-xdist` library.
