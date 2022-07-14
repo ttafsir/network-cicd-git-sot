@@ -22,7 +22,7 @@ This list will evolve as we add more automation to the stack.
 1. Clone the repo
 
 ```sh
-git clone https://github.com/ttafsir/
+git clone https://github.com/ttafsir/network-cicd-git-sot
 ```
 
 ### Install Requirements
