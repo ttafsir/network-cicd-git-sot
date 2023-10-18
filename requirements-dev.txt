@@ -143,7 +143,7 @@ pytest-forked==1.4.0
     # via pytest-xdist
 pytest-html==3.1.1
     # via -r requirements-dev.in
-pytest-metadata==2.0.1
+pytest-metadata==3.0.0
     # via pytest-html
 pytest-testinfra[ansible]==6.8.0
     # via -r requirements-dev.in
@@ -187,7 +187,7 @@ tomli==2.0.1
     # via pytest
 tox==3.25.1
     # via -r requirements.txt
-urllib3==1.26.9
+urllib3==1.26.18
     # via
     #   -r requirements.txt
     #   requests
