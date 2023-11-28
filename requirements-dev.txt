@@ -45,7 +45,7 @@ commonmark==0.9.1
     # via
     #   -r requirements.txt
     #   rich
-cryptography==36.0.2
+cryptography==41.0.6
     # via
     #   -r requirements.txt
     #   ansible-core
