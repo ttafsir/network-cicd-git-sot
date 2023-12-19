@@ -96,7 +96,7 @@ packaging==21.3
     #   ansible-core
     #   pytest
     #   tox
-paramiko==2.11.0
+paramiko==3.4.0
     # via -r requirements-dev.in
 platformdirs==2.5.2
     # via
@@ -173,7 +173,6 @@ rich==10.16.2
 six==1.16.0
     # via
     #   -r requirements.txt
-    #   paramiko
     #   textfsm
     #   tox
     #   virtualenv
